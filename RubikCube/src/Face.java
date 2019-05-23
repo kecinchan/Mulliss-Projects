@@ -23,7 +23,7 @@ public class Face {
 		
 		for (int i = 0; i < 9; i++) {
 			
-			this.stickers[i] = inputFace.getASticker(i);
+			this.stickers[i] = inputFace.getStickers(i);
 			
 		}
 		
@@ -41,9 +41,25 @@ public class Face {
 		
 	}
 	
-	public String getASticker(int index) {
+	public String getStickers(int index) {
 		
 		return this.stickers[index];
+		
+	}
+	
+	public void setStickers(String[] inputStickers) {
+		
+		for (int i = 0; i < 9; i++) {
+			
+			this.stickers[i] = inputStickers[i];
+			
+		}
+		
+	}
+	
+	public void setStickers(int index, String color) {
+		
+		this.stickers[index] = color;
 		
 	}
 	

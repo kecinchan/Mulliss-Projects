@@ -13,9 +13,12 @@ public class Runner {
 		Cube cube = new Cube(greenFace, blueFace, whiteFace, yellowFace, redFace, orangeFace);
 		cube.printCube();
 		
-		cube.rotateX(false);
-		cube.printCube();
-		cube.rotateX(true);
+		//cube.right(false);
+		
+		cube.rotateY(false);
+		cube.front(false);
+		cube.rotateY(true);
+		
 		cube.printCube();
 		
 	}

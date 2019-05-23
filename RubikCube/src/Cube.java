@@ -88,13 +88,11 @@ public class Cube {
 		
 		if (anti) {
 			
-			placeHolder = new Face(this.faceR);
-			this.faceR = new Face(this.faceF);
-			placeHolder2 = new Face(this.faceB);
-			this.faceB = new Face(placeHolder);
-			placeHolder = new Face(this.faceL);
-			this.faceL = new Face(placeHolder2);
-			this.faceF = new Face(placeHolder);
+			placeHolder = new Face(this.faceF);
+			this.faceF = new Face(this.faceL);
+			this.faceL = new Face(this.faceB);
+			this.faceB = new Face(this.faceR);
+			this.faceR = new Face(placeHolder);
 			
 		} else {
 		
@@ -172,7 +170,69 @@ public class Cube {
 	
 	public void front(boolean anti) {
 		
+		String[] placeHolder = new String[3];
 		
+		if (anti) {
+			
+			placeHolder[0] = this.faceL.getStickers(6);
+			placeHolder[1] = this.faceL.getStickers(7);
+			placeHolder[2] = this.faceL.getStickers(8);
+			
+			this.faceL.setStickers(6, this.faceU.getStickers(6));
+			this.faceL.setStickers(7, this.faceU.getStickers(7));
+			this.faceL.setStickers(8, this.faceU.getStickers(8));
+			
+			this.faceU.setStickers(6, this.faceR.getStickers(6));
+			this.faceU.setStickers(7, this.faceR.getStickers(7));
+			this.faceU.setStickers(8, this.faceR.getStickers(8));
+			
+			this.faceR.setStickers(6, this.faceD.getStickers(2));
+			this.faceR.setStickers(7, this.faceD.getStickers(1));
+			this.faceR.setStickers(8, this.faceD.getStickers(0));
+			
+			this.faceD.setStickers(2, placeHolder[0]);
+			this.faceD.setStickers(1, placeHolder[1]);			
+			this.faceD.setStickers(0, placeHolder[2]);
+			
+		} else {
+			
+			placeHolder[0] = this.faceR.getStickers(6);
+			placeHolder[1] = this.faceR.getStickers(7);
+			placeHolder[2] = this.faceR.getStickers(8);
+			
+			this.faceR.setStickers(6, this.faceU.getStickers(6));
+			this.faceR.setStickers(7, this.faceU.getStickers(7));
+			this.faceR.setStickers(8, this.faceU.getStickers(8));
+			
+			this.faceU.setStickers(6, this.faceL.getStickers(6));
+			this.faceU.setStickers(7, this.faceL.getStickers(7));
+			this.faceU.setStickers(8, this.faceL.getStickers(8));
+			
+			this.faceL.setStickers(6, this.faceD.getStickers(2));
+			this.faceL.setStickers(7, this.faceD.getStickers(1));
+			this.faceL.setStickers(8, this.faceD.getStickers(0));
+			
+			this.faceD.setStickers(2, placeHolder[0]);
+			this.faceD.setStickers(1, placeHolder[1]);			
+			this.faceD.setStickers(0, placeHolder[2]);
+			
+		}
+		
+	}
+	
+	public void right(boolean anti) {
+		
+		if (anti) {
+			
+			
+			
+		} else {
+			
+			this.rotateY(false);
+			this.front(false);
+			this.rotateY(true);
+			
+		}		
 		
 	}
 	
@@ -195,7 +255,7 @@ public class Cube {
 				+ 		  "    |%s%s%s|\n"
 				+ 		  "    |%s%s%s|\n"
 				+ 		  "    -----\n"
-		, this.faceB.getASticker(0), this.faceB.getASticker(1), this.faceB.getASticker(2), this.faceB.getASticker(3), this.faceB.getASticker(4), this.faceB.getASticker(5), this.faceB.getASticker(6), this.faceB.getASticker(7), this.faceB.getASticker(8), this.faceL.getASticker(0), this.faceL.getASticker(1), this.faceL.getASticker(2), this.faceU.getASticker(0), this.faceU.getASticker(1), this.faceU.getASticker(2), this.faceR.getASticker(0), this.faceR.getASticker(1), this.faceR.getASticker(2), this.faceL.getASticker(3), this.faceL.getASticker(4), this.faceL.getASticker(5), this.faceU.getASticker(3), this.faceU.getASticker(4), this.faceU.getASticker(5), this.faceR.getASticker(3), this.faceR.getASticker(4), this.faceR.getASticker(5), this.faceL.getASticker(6), this.faceL.getASticker(7), this.faceL.getASticker(8), this.faceU.getASticker(6), this.faceU.getASticker(7), this.faceU.getASticker(8), this.faceR.getASticker(6), this.faceR.getASticker(7), this.faceR.getASticker(8), this.faceF.getASticker(0), this.faceF.getASticker(1), this.faceF.getASticker(2), this.faceF.getASticker(3), this.faceF.getASticker(4), this.faceF.getASticker(5), this.faceF.getASticker(6), this.faceF.getASticker(7), this.faceF.getASticker(8), this.faceD.getASticker(0), this.faceD.getASticker(1), this.faceD.getASticker(2), this.faceD.getASticker(3), this.faceD.getASticker(4), this.faceD.getASticker(5), this.faceD.getASticker(6), this.faceD.getASticker(7), this.faceD.getASticker(8) );
+		, this.faceB.getStickers(0), this.faceB.getStickers(1), this.faceB.getStickers(2), this.faceB.getStickers(3), this.faceB.getStickers(4), this.faceB.getStickers(5), this.faceB.getStickers(6), this.faceB.getStickers(7), this.faceB.getStickers(8), this.faceL.getStickers(0), this.faceL.getStickers(1), this.faceL.getStickers(2), this.faceU.getStickers(0), this.faceU.getStickers(1), this.faceU.getStickers(2), this.faceR.getStickers(0), this.faceR.getStickers(1), this.faceR.getStickers(2), this.faceL.getStickers(3), this.faceL.getStickers(4), this.faceL.getStickers(5), this.faceU.getStickers(3), this.faceU.getStickers(4), this.faceU.getStickers(5), this.faceR.getStickers(3), this.faceR.getStickers(4), this.faceR.getStickers(5), this.faceL.getStickers(6), this.faceL.getStickers(7), this.faceL.getStickers(8), this.faceU.getStickers(6), this.faceU.getStickers(7), this.faceU.getStickers(8), this.faceR.getStickers(6), this.faceR.getStickers(7), this.faceR.getStickers(8), this.faceF.getStickers(0), this.faceF.getStickers(1), this.faceF.getStickers(2), this.faceF.getStickers(3), this.faceF.getStickers(4), this.faceF.getStickers(5), this.faceF.getStickers(6), this.faceF.getStickers(7), this.faceF.getStickers(8), this.faceD.getStickers(0), this.faceD.getStickers(1), this.faceD.getStickers(2), this.faceD.getStickers(3), this.faceD.getStickers(4), this.faceD.getStickers(5), this.faceD.getStickers(6), this.faceD.getStickers(7), this.faceD.getStickers(8) );
 		
 	}
 	
