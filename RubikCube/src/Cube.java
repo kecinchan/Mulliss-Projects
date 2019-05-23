@@ -111,7 +111,7 @@ public class Cube {
 		}
 		
 	}
-	// ay
+	
 	public void rotateZ(boolean anti) {
 		
 		Face placeHolder;
@@ -134,12 +134,45 @@ public class Cube {
 			this.faceR = new Face(this.faceU);
 			placeHolder2 = new Face(this.faceD);
 			this.faceD = new Face(placeHolder);
-			placeHolder = new Face(faceL);
+			placeHolder = new Face(this.faceL);
 			this.faceL = new Face(placeHolder2);
 			this.faceU = new Face(placeHolder);
 			
 			
 		}
+		
+	}
+	
+	public void rotateX(boolean anti) {
+		
+		Face placeHolder;
+		Face placeHolder2;
+		
+		
+		if (anti) {
+			
+			placeHolder = new Face(this.faceF);
+			this.faceF = new Face(this.faceD);
+			this.faceD = new Face(this.faceB);
+			this.faceB = new Face(this.faceU);
+			this.faceU = new Face(placeHolder);
+			
+		} else {
+			
+			placeHolder = new Face(this.faceF);
+			this.faceF = new Face(this.faceU);
+			placeHolder2 = new Face(this.faceD);
+			this.faceD = new Face(placeHolder);
+			placeHolder = new Face(this.faceB);
+			this.faceB = new Face(placeHolder2);
+			this.faceU = new Face(placeHolder);
+		}
+		
+	}
+	
+	public void front(boolean anti) {
+		
+		
 		
 	}
 	
