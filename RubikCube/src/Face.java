@@ -63,6 +63,42 @@ public class Face {
 		
 	}
 	
+	public void rotate(boolean anti) {
+		
+		String placeHolder = "";
+		
+		if (anti) {
+			
+			placeHolder = this.stickers[6];
+			this.stickers[6] = this.stickers[0];
+			this.stickers[0] = this.stickers[2];
+			this.stickers[2] = this.stickers[8];
+			this.stickers[8] = placeHolder;
+			
+			placeHolder = this.stickers[7];
+			this.stickers[7] = this.stickers[3];
+			this.stickers[3] = this.stickers[1];
+			this.stickers[1] = this.stickers[5];
+			this.stickers[5] = placeHolder;
+			
+		} else {
+			
+			placeHolder = this.stickers[6];
+			this.stickers[6] = this.stickers[8];
+			this.stickers[8] = this.stickers[2];
+			this.stickers[2] = this.stickers[0];
+			this.stickers[0] = placeHolder;
+		
+			placeHolder = this.stickers[7];
+			this.stickers[7] = this.stickers[5];
+			this.stickers[5] = this.stickers[1];
+			this.stickers[1] = this.stickers[3];
+			this.stickers[3] = placeHolder;
+			
+		}
+		
+	}
+	
 	public void printFace() {
 		
 		System.out.printf("-------\n|%s %s %s|\n|%s %s %s|\n|%s %s %s|\n-------", stickers[0], stickers[1], stickers[2], stickers[3], stickers[4], stickers[5], stickers[6], stickers[7], stickers[8]);

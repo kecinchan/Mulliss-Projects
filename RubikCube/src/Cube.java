@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Cube {
 
 	private Face faceF;
@@ -10,14 +12,26 @@ public class Cube {
 	boolean isSolved;
 	String frontFace;
 	
-	public Cube(Face inputFace1, Face inputFace2, Face inputFace3, Face inputFace4, Face inputFace5, Face inputFace6) {
+	public Cube() {
 		
-		this.faceF = inputFace1;
-		this.faceB = inputFace2;
-		this.faceU = inputFace3;
-		this.faceD = inputFace4;
-		this.faceR = inputFace5;
-		this.faceL = inputFace6;
+		this.faceF = new Face("green");
+		this.faceB = new Face("blue");
+		this.faceU = new Face("white");
+		this.faceD = new Face("yellow");
+		this.faceR = new Face("red");
+		this.faceL = new Face("ornage");
+		
+	}
+	
+	public Cube(Face inputFaceF, Face inputFaceB, Face inputFaceU, Face inputFaceD, Face inputFaceR, Face inputFaceL) {
+		
+		this.faceF = inputFaceF;
+		this.faceB = inputFaceB;
+		this.faceU = inputFaceU;
+		this.faceD = inputFaceD;
+		this.faceR = inputFaceR;
+		this.faceL = inputFaceL;
+		
 		
 	}
 	
@@ -94,6 +108,13 @@ public class Cube {
 			this.faceB = new Face(this.faceR);
 			this.faceR = new Face(placeHolder);
 			
+			this.faceL.rotate(true);
+			this.faceB.rotate(true);
+			this.faceR.rotate(true);
+			this.faceF.rotate(true);
+			this.faceU.rotate(true);
+			this.faceD.rotate(false);
+			
 		} else {
 		
 			// put front into a placeholder
@@ -105,7 +126,14 @@ public class Cube {
 			this.faceB = new Face(this.faceL);
 			this.faceL = new Face(placeHolder);
 			this.faceR = new Face(placeHolder2);
-		
+			
+			this.faceL.rotate(false);
+			this.faceB.rotate(false);
+			this.faceR.rotate(false);
+			this.faceF.rotate(false);
+			this.faceU.rotate(false);
+			this.faceD.rotate(true);
+			
 		}
 		
 	}
@@ -135,7 +163,7 @@ public class Cube {
 			placeHolder = new Face(this.faceL);
 			this.faceL = new Face(placeHolder2);
 			this.faceU = new Face(placeHolder);
-			
+						
 			
 		}
 		
@@ -155,6 +183,9 @@ public class Cube {
 			this.faceB = new Face(this.faceU);
 			this.faceU = new Face(placeHolder);
 			
+			this.faceL.rotate(true);
+			this.faceR.rotate(false);
+			
 		} else {
 			
 			placeHolder = new Face(this.faceF);
@@ -164,6 +195,10 @@ public class Cube {
 			placeHolder = new Face(this.faceB);
 			this.faceB = new Face(placeHolder2);
 			this.faceU = new Face(placeHolder);
+			
+			this.faceL.rotate(false);
+			this.faceR.rotate(true);
+			
 		}
 		
 	}
@@ -194,6 +229,8 @@ public class Cube {
 			this.faceD.setStickers(1, placeHolder[1]);			
 			this.faceD.setStickers(0, placeHolder[2]);
 			
+			this.faceF.rotate(true);
+			
 		} else {
 			
 			placeHolder[0] = this.faceR.getStickers(6);
@@ -215,24 +252,210 @@ public class Cube {
 			this.faceD.setStickers(2, placeHolder[0]);
 			this.faceD.setStickers(1, placeHolder[1]);			
 			this.faceD.setStickers(0, placeHolder[2]);
+		
+			this.faceF.rotate(false);
 			
 		}
+		
 		
 	}
 	
 	public void right(boolean anti) {
 		
-		if (anti) {
+		this.rotateY(false);
+		this.front(anti);
+		this.rotateY(true);	
+		
+	}
+	
+	public void left(boolean anti) {
+		
+		this.rotateY(true);
+		this.front(anti);
+		this.rotateY(false);	
+		
+	}
+	
+	public void up(boolean anti) {
+		
+		this.rotateX(false);
+		this.front(anti);
+		this.rotateX(true);
+		
+	}
+	
+	public void down(boolean anti) {
+		
+		this.rotateX(true);
+		this.front(anti);
+		this.rotateX(false);
+		
+	}
+	
+	public void back(boolean anti) {
+		
+		this.rotateY(false);
+		this.rotateY(false);
+		this.front(anti);
+		this.rotateY(true);
+		this.rotateY(true);
+		
+	}
+	
+	public void shuffle(String shuffle) {
+		
+		boolean anti = false;
+		int multiplier = 1;
+		String move = "";
+		String shift = "";
+		
+		for (int i = 0; i < shuffle.length(); i++) {
 			
+			move = shuffle.substring(i, i+1);
 			
+			if (i != shuffle.length() - 1) {
+				
+				shift = shuffle.substring(i+1, i+2);
+				
+				if (shift.equals("'")) {
+					
+					anti = true;
+					i++;
+					
+				} else if (shift.equals("2")) {
+					
+					multiplier = 2;
+					i++;
+					
+				}
+				
+				shift = "";
+				
+			}
 			
-		} else {
+			switch (move) {
 			
-			this.rotateY(false);
-			this.front(false);
-			this.rotateY(true);
+				case "U": 
+					
+					for (int j = 1; j <= multiplier; j++) {
+						
+						this.up(anti);
+						
+					}
+				break;
+				
+				case "D": 
+					
+					for (int j = 1; j <= multiplier; j++) {
+						
+						this.down(anti);
+						
+					}
+				break;
+				
+				case "F": 
+					
+					for (int j = 1; j <= multiplier; j++) {
+						
+						this.front(anti);
+						
+					}
+				break;
+				
+				case "B": 
+					
+					for (int j = 1; j <= multiplier; j++) {
+						
+						this.back(anti);
+						
+					}
+				break;
+				
+				case "L": 
+					
+					for (int j = 1; j <= multiplier; j++) {
+						
+						this.left(anti);
+						
+					}
+				break;
+				
+				case "R": 
+					
+					for (int j = 1; j <= multiplier; j++) {
+						
+						this.right(anti);
+						
+					}
+				break;
 			
-		}		
+			}
+			
+			move = "";
+			anti = false;
+			multiplier = 1;
+			
+		}
+		
+	}
+	
+	public void scramble() {
+		
+		String[] moves = new String[]{"F", "B", "U", "D", "L", "R", "F'", "B'", "U'", "D'", "R'", "L'"};
+		int lastMove = 0;
+		int move = 0;
+		Random rand = new Random();
+		
+		move = rand.nextInt(12);
+		
+		
+		
+	}
+	
+	public void doMove(String move) {
+		
+		boolean anti = false;
+		
+		if (move.length() == 2) {
+			
+			anti = true;
+			move = move.substring(0, 1);
+			
+		}
+		
+		switch (move) {
+		
+		case "U": 
+			
+			this.up(anti);
+			break;
+		
+		case "D": 
+							
+			this.down(anti);	
+			break;
+		
+		case "F": 
+			
+			this.front(anti);
+			break;
+		
+		case "B": 
+			
+			this.back(anti);
+			break;
+		
+		case "L": 
+			
+			this.left(anti);			
+			break;
+		
+		case "R": 
+			
+			this.right(anti);
+			break;
+	
+		}
 		
 	}
 	
