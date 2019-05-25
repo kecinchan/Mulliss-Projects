@@ -3,11 +3,9 @@ public class Runner {
 
 	public static void main(String[] args) {
 		
-		Cube cube = new Cube();
+		CubeViewer gui = new CubeViewer();
 		
-		cube.shuffle("LRU'DFBRLR2L");		
-		
-		cube.printCube();
+		gui.loadGUI();
 		
 	}
 
