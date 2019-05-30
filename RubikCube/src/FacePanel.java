@@ -9,7 +9,8 @@ public class FacePanel extends JPanel {
 	public FacePanel(Face faceF) {
 		
 		setBackground(Color.BLACK);
-		this.face = new Face(faceF);
+		//this.face = new Face(faceF);
+		this.face = faceF;
 		setSize(190, 190);
 		
 	}

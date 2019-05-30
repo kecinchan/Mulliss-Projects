@@ -4,6 +4,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class CubeViewer {
+public class CubeViewer implements ActionListener {
 	
 	FacePanel faceF;
 	FacePanel faceB;
@@ -33,6 +34,7 @@ public class CubeViewer {
 	
 	JPanel cubePanel;
 	JPanel buttonPanel;
+	JPanel buttonPanel2;
 	
 	JButton buttonF;
 	JButton buttonB;
@@ -46,17 +48,16 @@ public class CubeViewer {
 	JButton buttonDAnti;
 	JButton buttonLAnti;
 	JButton buttonRAnti;
+	JButton scrambleButton;
 	ActionListener buttons;
 		
 	public CubeViewer() {
 		
 		this.cube = new Cube();
-		//this.cube.scramble();
 		
 		//this.cube.printCube();
 		
 		this.faceF = new FacePanel(new Face(this.cube.getFace("f")));
-
 		this.faceB = new FacePanel(new Face(this.cube.getFace("b")));
 		this.faceU = new FacePanel(new Face(this.cube.getFace("u")));
 		this.faceD = new FacePanel(new Face(this.cube.getFace("d")));
@@ -77,6 +78,7 @@ public class CubeViewer {
 		
 		this.cubePanel = new JPanel();
 		this.buttonPanel = new JPanel();
+		this.buttonPanel2 = new JPanel();
 		
 		buttonF = new JButton("F");
 		buttonB = new JButton("B");
@@ -90,25 +92,11 @@ public class CubeViewer {
 		buttonDAnti = new JButton("D'");
 		buttonLAnti = new JButton("L'");
 		buttonRAnti = new JButton("R'");
+		this.scrambleButton = new JButton();
 		
 	}
 	
 	public void loadGUI() {
-		
-		/*
-		this.cubePanel.setLayout(new GridLayout(4,3));
-		this.cubePanel.add(empty1);
-		this.cubePanel.add(faceB);
-		this.cubePanel.add(empty2);
-		this.cubePanel.add(faceL);
-		this.cubePanel.add(faceU);
-		this.cubePanel.add(faceR);
-		this.cubePanel.add(empty3);
-		this.cubePanel.add(faceF);
-		this.cubePanel.add(empty4);
-		this.cubePanel.add(empty5);
-		this.cubePanel.add(faceD);
-		*/
 				
 		this.cubePanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -152,7 +140,6 @@ public class CubeViewer {
 		this.buttonPanel.setLayout(new GridLayout(3,4));
 		
 		this.buttonPanel.add(buttonF);
-		
 		this.buttonPanel.add(buttonFAnti);
 		this.buttonPanel.add(buttonB);
 		this.buttonPanel.add(buttonBAnti);
@@ -165,11 +152,56 @@ public class CubeViewer {
 		this.buttonPanel.add(buttonR);
 		this.buttonPanel.add(buttonRAnti);
 		
+		this.buttonF.addActionListener(this);
+		this.buttonF.setActionCommand("F");
+		this.buttonFAnti.addActionListener(this);
+		this.buttonFAnti.setActionCommand("F'");
+		
+		this.buttonB.addActionListener(this);
+		this.buttonB.setActionCommand("B");
+		this.buttonBAnti.addActionListener(this);
+		this.buttonBAnti.setActionCommand("B'");
+		
+		this.buttonL.addActionListener(this);
+		this.buttonL.setActionCommand("L");
+		this.buttonLAnti.addActionListener(this);
+		this.buttonLAnti.setActionCommand("L'");
+		
+		this.buttonR.addActionListener(this);
+		this.buttonR.setActionCommand("R");
+		this.buttonRAnti.addActionListener(this);
+		this.buttonRAnti.setActionCommand("R'");
+		
+		this.buttonU.addActionListener(this);
+		this.buttonU.setActionCommand("U");
+		this.buttonUAnti.addActionListener(this);
+		this.buttonUAnti.setActionCommand("U'");
+
+		this.buttonD.addActionListener(this);
+		this.buttonD.setActionCommand("D");
+		this.buttonDAnti.addActionListener(this);
+		this.buttonDAnti.setActionCommand("D'");
+		
+		this.scrambleButton.addActionListener(this);
+		this.scrambleButton.setActionCommand("scramble");
+		
 		c.gridx = 0;
 		c.gridy = 0;
 		c.ipadx = 0;
 		c.ipady = 80;
 		this.cubePanel.add(this.buttonPanel, c);
+		
+		c.gridx = 2;
+		c.gridy = 0;
+		this.cubePanel.add(this.buttonPanel2, c);
+		
+		this.scrambleButton.setText("Scramble");
+		this.buttonPanel2.add(this.scrambleButton);
+		
+		c.gridx = 2;
+		c.gridy = 0;
+		this.cubePanel.add(this.buttonPanel2, c);
+		
 		
 		this.mainFrame.add(this.cubePanel);
 		
@@ -180,6 +212,196 @@ public class CubeViewer {
 		
 		this.mainFrame.setVisible(true);
 
+	}
+	
+	public void scramble(String scramble, boolean animate) {
+		
+		int multiplier = 1;
+		this.cube.scramble = scramble;
+		
+		String move = "";
+		String shift = "";
+		
+		for (int i = 0; i < scramble.length(); i++) {
+			
+			move = scramble.substring(i, i+1);
+			
+			if (i != scramble.length() - 1) {
+				
+				shift = scramble.substring(i+1, i+2);
+				
+				if (shift.equals("'")) {
+					
+					move += "'";
+					
+				} else if (shift.equals("2")) {
+					
+					multiplier = 2;
+					i++;
+					
+				}
+				
+				shift = "";
+				
+			}
+			
+			for (int j = 1; j <= multiplier; j++ ) {
+			
+				if (animate) {
+					
+					try {
+						
+						Thread.sleep(100);
+						
+					} catch (InterruptedException e) {}
+					
+				}
+				
+				this.doMove(move);
+				this.redraw();
+				
+			}
+			
+			move = "";
+			multiplier = 1;
+			
+		}
+		
+	}
+	
+	public void scramble(int turns) {
+		
+		this.scramble(turns, false);
+		
+	}
+	
+	public void scramble(int turns, boolean animate) {
+		
+		String[] moves = new String[]{"F", "B", "U", "D", "L", "R", "F'", "B'", "U'", "D'", "R'", "L'"};
+		
+		String move;
+		String disallowedMove = "P";
+		
+		Random rand = new Random();
+		
+		for (int i = 1; i <= turns; i++) {
+			
+			do {
+				
+				move = moves[rand.nextInt(12)];
+				
+			} while (move.equals(disallowedMove));
+			
+
+			
+			this.doMove(move);
+			this.redraw();
+			
+			if (animate) {
+				
+				try {Thread.sleep(100);} catch (InterruptedException e) {}
+				
+			}
+			
+			this.cube.scramble += move;
+			
+			if (move.length() == 1) {
+				
+				disallowedMove = move + "'";
+				
+			} else {
+				
+				disallowedMove = move.substring(0, 1);
+				
+			}
+			
+		}
+		
+	}
+	
+	public void scramble() {
+		
+		this.scramble(20, false);
+		
+	}
+	
+	public void scramble(boolean animate) {
+		
+		this.scramble(20, animate);
+		
+	}
+	
+	public void doMove(String move) {
+		
+		boolean anti = false;
+		
+		if (move.length() == 2) {
+			
+			anti = true;
+			move = move.substring(0, 1);
+			
+		}
+		
+		switch (move) {
+		
+		case "U": 
+			
+			this.cube.up(anti);
+			break;
+		
+		case "D": 
+							
+			this.cube.down(anti);	
+			break;
+		
+		case "F": 
+			
+			this.cube.front(anti);
+			break;
+		
+		case "B": 
+			
+			this.cube.back(anti);
+			break;
+		
+		case "L": 
+			
+			this.cube.left(anti);			
+			break;
+		
+		case "R": 
+			
+			this.cube.right(anti);
+			break;
+			
+		case "scramble":
+			this.scramble(true);
+			break;
+	
+		}
+		
+	}
+
+	
+	public void redraw() {
+		
+		this.faceF.face.setStickers(this.cube.getFace("f").getStickers());
+		this.faceB.face.setStickers(this.cube.getFace("b").getStickers());
+		this.faceL.face.setStickers(this.cube.getFace("l").getStickers());
+		this.faceR.face.setStickers(this.cube.getFace("r").getStickers());
+		this.faceU.face.setStickers(this.cube.getFace("u").getStickers());
+		this.faceD.face.setStickers(this.cube.getFace("d").getStickers());
+		
+		this.faceF.paintImmediately(this.faceF.getBounds());
+		//this.mainFrame.repaint();
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		this.doMove(e.getActionCommand());
+		this.redraw();
 		
 	}	
 
