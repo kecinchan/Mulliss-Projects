@@ -49,6 +49,7 @@ public class CubeViewer implements ActionListener {
 	JButton buttonLAnti;
 	JButton buttonRAnti;
 	JButton scrambleButton;
+	JButton resetButton;
 	ActionListener buttons;
 		
 	public CubeViewer() {
@@ -92,7 +93,8 @@ public class CubeViewer implements ActionListener {
 		buttonDAnti = new JButton("D'");
 		buttonLAnti = new JButton("L'");
 		buttonRAnti = new JButton("R'");
-		this.scrambleButton = new JButton();
+		this.scrambleButton = new JButton("scramble");
+		this.resetButton = new JButton("reset");
 		
 	}
 	
@@ -184,6 +186,9 @@ public class CubeViewer implements ActionListener {
 		
 		this.scrambleButton.addActionListener(this);
 		this.scrambleButton.setActionCommand("scramble");
+		
+		this.resetButton.addActionListener(this);
+		this.resetButton.setActionCommand("reset");
 		
 		c.gridx = 0;
 		c.gridy = 0;
@@ -377,6 +382,9 @@ public class CubeViewer implements ActionListener {
 		case "scramble":
 			this.scramble(true);
 			break;
+			
+		case "reset":
+			this.cube = new Cube();
 	
 		}
 		
@@ -393,7 +401,7 @@ public class CubeViewer implements ActionListener {
 		this.faceD.face.setStickers(this.cube.getFace("d").getStickers());
 		
 		this.faceF.paintImmediately(this.faceF.getBounds());
-		//this.mainFrame.repaint();
+		this.mainFrame.repaint();
 		
 	}
 
