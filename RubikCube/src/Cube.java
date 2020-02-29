@@ -9,10 +9,12 @@ public class Cube {
 	private Face faceR;
 	private Face faceL;
 	
-	boolean isSolved;
+	private boolean isSolved;
 	
-	String frontFace;
-	String scramble;
+	private double solvePercentage;
+	
+	private String frontFace;
+	public String scramble;
 	
 	public Cube() {
 		
@@ -24,6 +26,7 @@ public class Cube {
 		this.faceL = new Face("ornage");
 		
 		scramble = "";
+		solvePercentage = 1.0;
 		
 	}
 	
@@ -37,6 +40,12 @@ public class Cube {
 		this.faceL = inputFaceL;
 		
 		scramble = "";		
+		
+	}
+	
+	public double getSolvePercentage() {
+		
+		return this.solvePercentage;
 		
 	}
 	
@@ -262,6 +271,7 @@ public class Cube {
 			
 		}
 		
+		this.updateSolvePercentage();		
 		
 	}
 	
@@ -391,6 +401,27 @@ public class Cube {
 		
 	}
 	
+	public void doAlgorithm(String algorithm) {
+		
+		String move;
+		
+		for (int i = 0; i < algorithm.length(); i++) {
+			
+			move = algorithm.substring(i, i+1);
+			
+			if (i != (algorithm.length() - 1) && algorithm.substring(i+1, i+2).equals("'")) {
+				
+				move += "'";
+				i++;
+				
+			}
+			
+			doMove(move);
+			
+		}
+		
+	}
+	
 	public void doMove(String move) {
 		
 		boolean anti = false;
@@ -433,10 +464,32 @@ public class Cube {
 			
 			this.right(anti);
 			break;
+			
+		case "X":
+			
+			this.rotateX(anti);
+			break;
+			
+		case "Y":
+			
+			this.rotateY(anti);
+			break;
+			
+		case "Z":
+			
+			this.rotateZ(anti);
+			break;
 	
 		}
 		
 	}
+	
+	public void updateSolvePercentage() {
+		
+		this.solvePercentage = (this.faceF.correctAmount() + this.faceB.correctAmount() +this.faceU.correctAmount() +this.faceD.correctAmount() +this.faceL.correctAmount() +this.faceR.correctAmount()) / 54.0;
+		
+	}
+	
 	
 	public void printCube() {
 		

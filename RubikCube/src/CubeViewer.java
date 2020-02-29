@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class CubeViewer implements ActionListener {
 	
@@ -23,7 +24,9 @@ public class CubeViewer implements ActionListener {
 	
 	Cube cube;
 	JFrame mainFrame;
+	
 	JLabel scramble;
+	JLabel solvePercentage;
 	
 	JPanel empty1;
 	JPanel empty2;
@@ -50,6 +53,8 @@ public class CubeViewer implements ActionListener {
 	JButton buttonRAnti;
 	JButton scrambleButton;
 	JButton resetButton;
+	JButton solveButton;
+	
 	ActionListener buttons;
 		
 	public CubeViewer() {
@@ -69,6 +74,9 @@ public class CubeViewer implements ActionListener {
 		
 		this.scramble = new JLabel();
 		this.scramble.setText(cube.scramble);
+		
+		this.solvePercentage = new JLabel();
+		this.solvePercentage.setText("solve percent: " + this.cube.getSolvePercentage()*100);
 		
 		this.empty1 = new JPanel();
 		this.empty2 = new JPanel();
@@ -95,6 +103,7 @@ public class CubeViewer implements ActionListener {
 		buttonRAnti = new JButton("R'");
 		this.scrambleButton = new JButton("scramble");
 		this.resetButton = new JButton("reset");
+		this.solveButton = new JButton("test");
 		
 	}
 	
@@ -190,6 +199,9 @@ public class CubeViewer implements ActionListener {
 		this.resetButton.addActionListener(this);
 		this.resetButton.setActionCommand("reset");
 		
+		this.solveButton.addActionListener(this);
+		this.solveButton.setActionCommand("solve");
+		
 		c.gridx = 0;
 		c.gridy = 0;
 		c.ipadx = 0;
@@ -200,8 +212,11 @@ public class CubeViewer implements ActionListener {
 		c.gridy = 0;
 		this.cubePanel.add(this.buttonPanel2, c);
 		
-		this.scrambleButton.setText("Scramble");
+		this.buttonPanel2.setLayout(new BoxLayout(this.buttonPanel2, BoxLayout.PAGE_AXIS));
 		this.buttonPanel2.add(this.scrambleButton);
+		this.buttonPanel2.add(this.resetButton);
+		this.buttonPanel2.add(this.solvePercentage);
+		this.buttonPanel2.add(this.solveButton);
 		
 		c.gridx = 2;
 		c.gridy = 0;
@@ -385,6 +400,10 @@ public class CubeViewer implements ActionListener {
 			
 		case "reset":
 			this.cube = new Cube();
+			break;
+			
+		case "solve":
+			this.cube.doAlgorithm("UUU'");
 	
 		}
 		
@@ -399,11 +418,15 @@ public class CubeViewer implements ActionListener {
 		this.faceR.face.setStickers(this.cube.getFace("r").getStickers());
 		this.faceU.face.setStickers(this.cube.getFace("u").getStickers());
 		this.faceD.face.setStickers(this.cube.getFace("d").getStickers());
+		this.solvePercentage.setText("solve percent: " + Math.floor(this.cube.getSolvePercentage()*100));
+		//this.faceF.paintImmediately(this.faceF.getBounds());
+		//this.mainFrame.repaint();
 		
-		this.faceF.paintImmediately(this.faceF.getBounds());
-		this.mainFrame.repaint();
-		
+		this.mainFrame.repaint(0);
+		  
 	}
+		
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

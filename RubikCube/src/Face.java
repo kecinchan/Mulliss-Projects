@@ -99,6 +99,24 @@ public class Face {
 		
 	}
 	
+	public int correctAmount() {
+		
+		int correctCount = 0;
+		
+		for (String sticker : this.stickers) {
+			
+			if (sticker.equals(this.side.substring(0, 1))) {
+				
+				correctCount++;
+				
+			}
+			
+		}
+		
+		return correctCount;
+		
+	}
+	
 	public void printFace() {
 		
 		System.out.printf("-------\n|%s %s %s|\n|%s %s %s|\n|%s %s %s|\n-------", stickers[0], stickers[1], stickers[2], stickers[3], stickers[4], stickers[5], stickers[6], stickers[7], stickers[8]);
